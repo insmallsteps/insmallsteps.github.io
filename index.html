@@ -97,7 +97,34 @@
   }
 }( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">fengfengyu</div><div class="profile-signature">for me</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">ASL Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>ASL Blog</h1><h5>Welcome to my Blog!</h5><div class="intro-social"></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/11/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-11-09T07:01:01.000Z">2019-11-09</time></div><div class="recent-post-content">正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为”元字符”）。
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">fengfengyu</div><div class="profile-signature">for me</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">ASL Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>ASL Blog</h1><h5>Welcome to my Blog!</h5><div class="intro-social"></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/11/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7%E5%92%8C%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99/">正则表达式运算符优先级和匹配规则</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-11-09T08:17:10.000Z">2019-11-09</time></div><div class="recent-post-content">运算符优先级正则表达式从左到右进行计算，并遵循优先级顺序，这与算术表达式非常类似。
+相同优先级的从左到右进行运算，不同优先级的运算先高后低。下表从最高到最低说明了各种正则表达式运算符的优先级顺序：
+
+
+
+运算符
+描述
+
+
+
+\
+转义符
+
+
+(), (?:), (?=), []
+圆括号和方括号
+
+
+*, +, ?, {n}, {n,}, {n,m}
+限定符
+
+
+^, $, \任何元字符、任何字符
+定位点和序列（即：位置和顺序）
+
+
+|
+替换，”或”操作 字符具有高于替换运算符的优先级，使得”m|food”匹配”m”或”food”。若要匹配”mood”或”food”，请使用括号创建子表达式，从而产 ...</div><div class="read-more"><a class="more" href="/2019/11/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7%E5%92%8C%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/11/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-11-09T07:01:01.000Z">2019-11-09</time></div><div class="recent-post-content">正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为”元字符”）。
 正则表达式使用单个字符串来描述、匹配一系列匹配某个句法规则的字符串。
 正则表达式是繁琐的，但它是强大的，学会之后的应用会让你除了提高效率外，会给你带来绝对的成就感。只要认真阅读本教程，加上应用的时候进行一定的参考，掌握正则表达式不是问题。
 许多程序设计语言都支持利用正则表达式进行字符串操作。
