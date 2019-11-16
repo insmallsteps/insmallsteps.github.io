@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="ASL"><meta name="renderer" content="webkit"><meta name="copyright" content="ASL"><meta name="keywords" content="Hexo"><meta name="description" content="null"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>图片自适应的五种可能 · ASL Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">fengfengyu</div><div class="profile-signature">for me</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">ASL Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">图片自适应的五种可能</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-10-31</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><ol>
+<li><a href="https://vevlins.github.io/2018/03/29/图片自适应的五种可能/#transform实现居中" target="_blank" rel="noopener">transform实现居中</a></li>
+<li><a href="https://vevlins.github.io/2018/03/29/图片自适应的五种可能/#background" target="_blank" rel="noopener">background</a></li>
+<li><a href="https://vevlins.github.io/2018/03/29/图片自适应的五种可能/#object-fit" target="_blank" rel="noopener">object-fit</a></li>
+<li><a href="https://vevlins.github.io/2018/03/29/图片自适应的五种可能/#height使用vw单位" target="_blank" rel="noopener">height使用vw单位</a></li>
+<li><a href="https://vevlins.github.io/2018/03/29/图片自适应的五种可能/#活用padding" target="_blank" rel="noopener">活用padding</a></li>
+</ol>
+<p>在自适应问题上，图片的自适应可以说是最关键了。</p>
+<p>在仿做小红书的过程中，我也遇到了这个问题，小红书作为一个商品展示性的社区，商品图片的自适应是很重要的。在放眼望去都是图片的页面里，一两个变形可能会极大地影响用户的感受。</p>
+<p>我在两个地方遇到了图片适应的问题，一个是品牌精选的卡片，对于宽固定，图片高度不规则并且比容器本身要大的情况；还有一个是在做九宫格要求图片宽高一致。</p>
+<h2 id="transform实现居中"><a href="#transform实现居中" class="headerlink" title="transform实现居中"></a>transform实现居中</h2><p>这是小红书官方采用的方案，设置外层<code>overflow:hidden</code>，然后将内部图片设置居中，多余的部分直接被隐藏。这种方案对于不能明确容器和待展示图片大小关系的情况时并不使用。</p>
+<h2 id="background"><a href="#background" class="headerlink" title="background"></a>background</h2><p>主要应用到的是一个<code>background-size:cover</code>属性，这个属性可以使图片适应填满，多余的部分会被裁剪掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">background-image:url();</span><br><span class="line">background-size: cover;</span><br><span class="line">background-posiiton:center;</span><br></pre></td></tr></table></figure>
+
+<p>这种方案是目前使用范围最广泛，并且认为最理想的解决方案，但是张鑫旭的博客中对于这种方案提了一点问题：由于cover存在剪裁，所以在大小发生变化时展示出来的背景图区域也是不同的。这主要是因为视窗宽度变化时，高度没有等比例变化。对此他提出了本文最后的两种解决方案。</p>
+<hr>
+<p>一点延伸，在复习background属性时碰到了一个知识点。</p>
+<p>background-clip和background-origin的可选值都是一样的，border-box、padding-box、content-box。那么他们的区别是什么？</p>
+<p>简单来说，clip是规定了定位的区域，而origin只是定义了原点，也就是左上角。</p>
+<p>另外对于border-box，如果填充的是图片，左边和上边实际上并不会填充进去。</p>
+<h2 id="object-fit"><a href="#object-fit" class="headerlink" title="object-fit"></a>object-fit</h2><p><code>object-fit</code>基本上算是<code>background-size</code>的姐妹篇，不同的是，这个属性是对于置换元素而言而非背景图像。</p>
+<h2 id="height使用vw单位"><a href="#height使用vw单位" class="headerlink" title="height使用vw单位"></a>height使用vw单位</h2><p>一言以蔽之：这主要是因为视窗宽度变化时，高度没有等比例变化。</p>
+<h2 id="活用padding"><a href="#活用padding" class="headerlink" title="活用padding"></a>活用padding</h2><p>padding使用百分比单位时，是根据父级元素的宽度来确定的，所以通过设定padding，可以实现自适应，他们的宽高是同时变化的。</p>
+<p>接下来是偷css大招。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.banner &#123;</span><br><span class="line">    padding: 15.15% 0 0;</span><br><span class="line">    position: relative;</span><br><span class="line">&#125;</span><br><span class="line">.banner &gt; img &#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    width: 100%; height: 100%;</span><br><span class="line">    left: 0; top: 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><!-- lincense--><div class="post-paginator"><a class="prevSlogan" href="/2019/10/31/%E5%9C%A8%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90/" title="在博客中添加音乐"><span>< PreviousPost</span><br><span class="prevTitle">在博客中添加音乐</span></a><a class="nextSlogan" href="/2019/10/31/%E4%BD%BF%E7%94%A8Css%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/" title="使用Css获取用户密码"><span>NextPost ></span><br><span class="nextTitle">使用Css获取用户密码</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#transform实现居中"><span class="toc-number">1.</span> <span class="toc-text">transform实现居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#background"><span class="toc-number">2.</span> <span class="toc-text">background</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#object-fit"><span class="toc-number">3.</span> <span class="toc-text">object-fit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#height使用vw单位"><span class="toc-number">4.</span> <span class="toc-text">height使用vw单位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#活用padding"><span class="toc-number">5.</span> <span class="toc-text">活用padding</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

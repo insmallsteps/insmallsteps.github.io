@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="ASL"><meta name="renderer" content="webkit"><meta name="copyright" content="ASL"><meta name="keywords" content="Hexo"><meta name="description" content="null"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>在博客中添加音乐 · ASL Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">fengfengyu</div><div class="profile-signature">for me</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">ASL Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">在博客中添加音乐</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-10-31</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h2 id="1-音乐来源"><a href="#1-音乐来源" class="headerlink" title="1. 音乐来源"></a>1. 音乐来源</h2><p>现在要找个 <code>.mp3</code> 外链资源可真不容易，以往的酷狗歌曲信息里带着，现在也不见了，百度音乐下载也得用客户端，还不显示链接，各大音乐网站真是越来越小心了啊。</p>
+<h3 id="1-1-网易云音乐"><a href="#1-1-网易云音乐" class="headerlink" title="1.1 网易云音乐"></a>1.1 网易云音乐</h3><p>想要从网站获取音乐链接的方法还是有的，比如说 <a href="https://music.163.com/#" target="_blank" rel="noopener">网易云音乐</a> 。使用Google/firefox/edge等带开发者工具的浏览器打开网易云音乐，搜索自己想要的音乐，并进行播放，然后打开开发者工具。开发工具打开方式：</p>
+<ol>
+<li>谷歌：右键点击 <strong>检查</strong>，或使用快捷键 <code>Ctrl+Shift+I</code> ;</li>
+<li>edge：右键点击 <strong>检查元素</strong>/ <strong>查看源</strong>，或使用快捷键 <code>F12</code> ;</li>
+<li>firefox：快捷键 <code>Shift+F2</code> 。</li>
+</ol>
+<p><a href="https://www.litreily.top/assets/music/xishanyao.png" target="_blank" rel="noopener"><img src="https://www.litreily.top/assets/music/xishanyao.png" alt="网易云音乐"></a></p>
+<p>以 <a href="https://music.163.com/#/song?id=405253647" target="_blank" rel="noopener">夕山谣</a> 为例，打开开发工具，找到 <code>Application</code> ，打开 <code>Frames/top/Media</code> 。</p>
+<p><a href="https://www.litreily.top/assets/music/xishanyaoLink.png" target="_blank" rel="noopener"><img src="https://www.litreily.top/assets/music/xishanyaoLink.png" alt="开发工具"></a></p>
+<p>右键选择” Open link in new tab “ 或者 “ Copy link address “，选取链接的前半部分,以 <code>.mp3</code> 结尾。得到链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">夕山谣http://m10.music.126.net/20161028204714/808f68e0d3afc7d68d6945d0ce8336eb/ymusic/5a20/163f/3437/9a6871479b12bc82fff53821676faedc.mp3</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-本地上传"><a href="#1-2-本地上传" class="headerlink" title="1.2 本地上传"></a>1.2 本地上传</h3><p>除了上述方法外，也可以手动制作音乐外链，当然，这需要借助于其它网站，比如 <a href="http://www.111ttt.com/up/" target="_blank" rel="noopener">www.111ttt.com/up/</a> 。在该网站上传已经下好的音乐文件，然后点击播放地址，在弹出的页面底部就有已生成的外链地址了。</p>
+<p><a href="https://www.litreily.top/assets/music/upFile.png" target="_blank" rel="noopener"><img src="https://www.litreily.top/assets/music/upFile.png" alt="上传音乐"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Critty 杏花弦外雨http://sc.111ttt.com/up/mp3/193721/278DF18856D56FEC6B4E6EDC15D97906.mp3</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-七牛云存储"><a href="#1-3-七牛云存储" class="headerlink" title="1.3 七牛云存储"></a>1.3 七牛云存储</h3><p><a href="http://www.qiniu.com/" target="_blank" rel="noopener">七牛云</a> 作为国内领先的企业级云服务商，当然提供了最基本的云存储服务。当前可以免费注册并进行实名认证，之后可以获取 10GB 的免费存储空间。</p>
+<p><a href="https://www.litreily.top/assets/music/qiniuyunSpace.png" target="_blank" rel="noopener"><img src="https://www.litreily.top/assets/music/qiniuyunSpace.png" alt="七牛云免费空间"></a></p>
+<p>注册并登录后，需要先创建一个空间，如 <code>litreily</code>，然后打开 <code>对象存储</code> &gt;&gt; <code>litreily</code> &gt;&gt; <code>内容管理</code>。此时便可上传文件，文件类型不限，我们可以将本地音乐文件上传后获取其外链地址。</p>
+<p><a href="https://www.litreily.top/assets/music/qiniuyunLink.png" target="_blank" rel="noopener"><img src="https://www.litreily.top/assets/music/qiniuyunLink.png" alt="七牛云外链获取方法"></a></p>
+<p>所得外链地址为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CRITTY - 轮回之境http://ofx35z92m.bkt.clouddn.com/CRITTY%20-%20%E8%BD%AE%E5%9B%9E%E4%B9%8B%E5%A2%83.mp3</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-音乐播放器"><a href="#2-音乐播放器" class="headerlink" title="2. 音乐播放器"></a>2. 音乐播放器</h2><h3 id="2-1-网易云音乐插件"><a href="#2-1-网易云音乐插件" class="headerlink" title="2.1 网易云音乐插件"></a>2.1 网易云音乐插件</h3><p>网易云音乐提供了外链播放器，官方提供的使用方法如下：</p>
+<ol>
+<li>在 <a href="https://music.163.com/" target="_blank" rel="noopener">music.163.com</a> 进入单曲、歌单、专辑、电台节目页面后，点击 “生成外链播放器” 链接。</li>
+<li>歌单和专辑外链播放器可以选择大中小三种尺寸，单曲和电台节目可以选择中小两种尺寸。你可以选择最适合你网站设计的尺寸。</li>
+<li>还可以选择是否要自动播放，打上勾后，别人访问网站时播放器会自动开始播放。</li>
+<li>最后将播放器的代码黏贴到你的网站上，大功告成！</li>
+</ol>
+<p>[示例：杏花轩外雨]</p>
+<p><a href="https://www.litreily.top/assets/music/wlPlayer.png" target="_blank" rel="noopener"><img src="https://www.litreily.top/assets/music/wlPlayer.png" alt="网易云音乐外链播放器"></a></p>
+<p>[示例代码]</p>
+<p><a href="https://www.litreily.top/assets/music/wlDemo.png" target="_blank" rel="noopener"><img src="https://www.litreily.top/assets/music/wlDemo.png" alt="网易云音乐外链demo"></a></p>
+<p>[示例说明]</p>
+<ol>
+<li>HTML源码中的 “ auto=1 “ 代表自动播放，改为0即可取消自动播放功能；</li>
+<li>在markdown文件中引用该插件时，需要将 <code>iframe</code> 的 <code>width</code> 和 <code>height</code> 属性值用双引号包围起来，即 width=”330” height=”86” ,否则可能出现无法解析该代码的情况；</li>
+<li>使用插件时可以添加一个类（如：class=”musicPlayer”），参考以下代码可以设置播放器的长宽。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.musicPlayer&#123;    width: 100%;    max-width: 500px;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>[示例播放1：height=66 auto=1]</p>
+<iframe class="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="https://music.163.com/outchain/player?type=2&amp;id=32957012&amp;auto=1&amp;height=66"></iframe>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe class=&quot;musicPlayer&quot; frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot;height=&quot;86&quot; src=&quot;https://music.163.com/outchain/player?type=2&amp;id=32957012&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+
+<p>[示例播放2：height=32 auto=0]</p>
+<iframe class="musicPlayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="52" src="https://music.163.com/outchain/player?type=2&amp;id=32548265&amp;auto=0&amp;height=32"></iframe>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe class=&quot;musicPlayer&quot; frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;298&quot;height=&quot;52&quot; src=&quot;https://music.163.com/outchain/player?type=2&amp;id=32548265&amp;auto=0&amp;height=32&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-audio-js"><a href="#2-2-audio-js" class="headerlink" title="2.2 audio.js"></a>2.2 audio.js</h3><p><a href="https://kolber.github.io/audiojs/" target="_blank" rel="noopener">audio.js</a>是一款轻量级的音乐播放器，下载文件后，将文件夹 “audiojs” 放在网站文件目录中，通过以下代码的形式将该播放器引入网页中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;    ...    &lt;script src=&quot;/audiojs/audio.min.js&quot;&gt;&lt;/script&gt;    &lt;script&gt;      audiojs.events.ready(function() &#123;        audiojs.createAll();      &#125;);    &lt;/script&gt;    ...&lt;/head&gt;&lt;body&gt;    ...    &lt;!-- 音乐播放器位置 --&gt;    &lt;!-- preload=&quot;auto&quot; 可以替换为 autoplay 或者 loop  --&gt;    &lt;audio class=&quot;musicPlayer&quot; src=&quot;https://sc.111ttt.com/up/mp3/397401/2A97E1C49899C77A559BCD1E224FCBAB.mp3&quot;    preload=&quot;auto&quot;&gt;&lt;/audio&gt;    &lt;!-- 说明：使用该插件后，其脚本语言将自动为其添加以下内容：        class=&quot;audiojs&quot; classname=&quot;audiojs&quot; id=&quot;audiojs_wrapper0&quot;        如果一个页面中存在多个audiojs播放器，其id尾数将从0逐一增加        通过css修改这些属性，我们可以改变播放器的外观 --&gt;    ...&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>[示例：杏花轩外雨，链接由上述1.2方式而得]</p>
+<p>[示例html源码]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;audiojs   playing&quot; classname=&quot;audiojs&quot; id=&quot;audiojs_wrapper0&quot;&gt;    &lt;audio class=&quot;musicPlayer&quot; src=&quot;https://sc.111ttt.com/up/mp3/397401/2A97E1C49899C77A559BCD1E224FCBAB.mp3&quot; preload=&quot;auto&quot;&gt;&lt;/audio&gt;    &lt;div class=&quot;play-pause&quot;&gt;                     &lt;p class=&quot;play&quot;&gt;&lt;/p&gt;                     &lt;p class=&quot;pause&quot;&gt;&lt;/p&gt;                     &lt;p class=&quot;loading&quot;&gt;&lt;/p&gt;                     &lt;p class=&quot;error&quot;&gt;&lt;/p&gt;               &lt;/div&gt;               &lt;div class=&quot;scrubber&quot;&gt;        &lt;div class=&quot;progress&quot; style=&quot;width: 167.146px;&quot;&gt;&lt;/div&gt;        &lt;div class=&quot;loaded&quot; style=&quot;width: 280px;&quot;&gt;&lt;/div&gt;    &lt;/div&gt;               &lt;div class=&quot;time&quot;&gt;        &lt;em class=&quot;played&quot;&gt;02:22&lt;/em&gt;/&lt;strong class=&quot;duration&quot;&gt;03:57&lt;/strong&gt;               &lt;/div&gt;      &lt;div class=&quot;error-message&quot;&gt;&lt;/div&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-其它"><a href="#2-3-其它" class="headerlink" title="2.3 其它"></a>2.3 其它</h3><ul>
+<li><a href="http://www.ithome.com/html/it/195970.htm" target="_blank" rel="noopener">7 款高颜值 HTML5 播放器</a></li>
+<li><a href="https://www.oschina.net/news/27466/html5-audio-players" target="_blank" rel="noopener">10 个基于 Web 的 HTML5 音乐播放器</a></li>
+<li><a href="http://www.shejidaren.com/free-audio-players.html" target="_blank" rel="noopener">10 个免费开源的 JS 音乐播放器插件</a></li>
+<li><a href="http://www.17sucai.com/pins/tag/3189.html" target="_blank" rel="noopener">播放器 jquery 特效代码</a></li>
+</ul>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>网易云音乐的播放器插件使用方便，但是连接效率太低，经常获取不到资源或者获取速度过慢，而 audiojs 播放器虽然外观简陋些，但资源下载效率还不错，而且资源地址可以自定义，不会受限。所以，各有利弊，依情况而定吧。</p>
+</article><!-- lincense--><div class="post-paginator"><a class="prevSlogan" href="/2019/10/31/hexo%E5%8D%9A%E5%AE%A2%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6%E5%8F%8A%E7%94%A8%E6%B3%95/" title="hexo博客常用插件及用法"><span>< PreviousPost</span><br><span class="prevTitle">hexo博客常用插件及用法</span></a><a class="nextSlogan" href="/2019/10/31/%E5%9B%BE%E7%89%87%E8%87%AA%E9%80%82%E5%BA%94%E7%9A%84%E4%BA%94%E7%A7%8D%E5%8F%AF%E8%83%BD/" title="图片自适应的五种可能"><span>NextPost ></span><br><span class="nextTitle">图片自适应的五种可能</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-音乐来源"><span class="toc-number">1.</span> <span class="toc-text">1. 音乐来源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-网易云音乐"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 网易云音乐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-本地上传"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 本地上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-七牛云存储"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 七牛云存储</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-音乐播放器"><span class="toc-number">2.</span> <span class="toc-text">2. 音乐播放器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-网易云音乐插件"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 网易云音乐插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-audio-js"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 audio.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-其它"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 其它</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-总结"><span class="toc-number">3.</span> <span class="toc-text">3. 总结</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

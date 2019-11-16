@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="ASL"><meta name="renderer" content="webkit"><meta name="copyright" content="ASL"><meta name="keywords" content="Hexo"><meta name="description" content="null"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>安卓开发环境搭配 · ASL Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">fengfengyu</div><div class="profile-signature">for me</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">ASL Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">安卓开发环境搭配</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-10-30</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h2 id="1-2-开发环境搭建"><a href="#1-2-开发环境搭建" class="headerlink" title="1.2 开发环境搭建"></a>1.2 开发环境搭建</h2><h3 id="分类-Android-基础入门教程"><a href="#分类-Android-基础入门教程" class="headerlink" title="分类 Android 基础入门教程"></a><em>分类</em> <a href="https://www.runoob.com/w3cnote_genre/android" target="_blank" rel="noopener">Android 基础入门教程</a></h3><blockquote>
+<p>现在主流的Android开发环境有: ①Eclipse + ADT + SDK ②Android Studio + SDK ③IntelliJ IDEA + SDK 现在国内大部分开发人员还是使用的Eclipse，而谷歌宣布不再更新ADT后，并且官网也去掉了集成Android开发环境的Eclipse下载链接，各种现象都表示开发者最后都终将过渡到Android Studio，当然这段过渡时间会很长，但如果你是刚学Android的话建议直接冲Android Studio着手；而且很多优秀的开源项目都是基于Android Studio！当然，在本教程中对两种开发环境都会进行一个介绍，用哪个取决与你自己~ 还有一个IntelliJ，和Android Studio差不多的，并不对此进行讲解！</p>
+</blockquote>
+<h2 id="1-JDK安装与配置"><a href="#1-JDK安装与配置" class="headerlink" title="1.JDK安装与配置"></a>1.JDK安装与配置</h2><blockquote>
+<ul>
+<li><strong>Step 1:下载JDK</strong> 可以到官网进行下载：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html" target="_blank" rel="noopener">Jdk官方下载</a> 也可到笔者网盘下载：<a href="http://pan.baidu.com/s/1o6LxZHC" target="_blank" rel="noopener">笔者网盘</a> PS:这个随便下一个都可以，关系不大，32位的只能下32位哦！</li>
+<li><strong>Step 2:JDK安装</strong> 傻瓜式的下一步即可！</li>
+<li><strong>Step 3:环境变量的配置</strong> 配置环境变量是为了方便我们一些命令行的操作，后续会用到！ <strong>右键我的电脑——&gt;高级——&gt;环境变量</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/39936377.jpg" alt="Java环境变量配置1"> <strong>新建JAVA_HOME</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/12299725.jpg" alt="新建JAVA_HOME"> <strong>修改PATH变量，别把原本的东西删掉！！！！</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/80572641.jpg" alt="修改PATH变量"> <strong>新建CLASSPATH</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/87557685.jpg" alt="新建CLASSPATH"> <strong>验证环境是否配置完成</strong> 打开电脑的cmd(命令行)，win键 + R输入cmd，然后在命令行依次javac和java，出现如图效果表示配置完成： <img src="https://www.runoob.com/wp-content/uploads/2015/06/40813475.jpg" alt="此处输入图片的描述"></li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="2-开发工具二选一"><a href="#2-开发工具二选一" class="headerlink" title="2.开发工具二选一"></a>2.开发工具二选一</h2><blockquote>
+<p>一开始也说了开发环境IDE的现状，另外前面忘记说一点:Android Studio是比较吃配置的，如果电脑不怎么好，建议还是先使用Eclipse进行Android开发，下面先说下我们熟悉IDE开发APP的流程，按照下述流程来熟悉IDE的使用：</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/06/62458334.jpg" alt="熟悉IDE开发APP的流程"></p>
+<p>然后下面两个选一个，开始我们的Android开发之路吧！</p>
+<p><strong>Eclipse + ADT + SDK：</strong> <strong>Android Studio + SDK：</strong></p>
+</blockquote>
+<hr>
+<h2 id="3-相关术语的解析"><a href="#3-相关术语的解析" class="headerlink" title="3.相关术语的解析"></a>3.相关术语的解析</h2><blockquote>
+<ol>
+<li><strong>Dalvik：</strong> Android特有的虚拟机,和JVM不同,Dalvik虚拟机非常适合在移动终端上使用!</li>
+<li><strong>AVD：</strong> (android virtual machine):安卓虚拟设备,就是安卓的模拟器</li>
+<li><strong>ADT：</strong> (android development tools)安卓开发工具</li>
+<li><strong>SDK：</strong>(software development kit)软件开发工具包,就是安卓系统,平台架构等的工具集合,如adb.exe</li>
+<li><strong>DDMS：</strong>(dalvik debug monitor service)安卓调试工具</li>
+<li><strong>adb：</strong>安卓调试桥,在sdk的platform-tools目录下,功能很多,命令行必备</li>
+<li><strong>DX工具：</strong>将.class转换成.dex文件</li>
+<li><strong>AAPT：</strong>(android asset packing tool),安卓资源打包工具</li>
+<li><strong>R.java文件：</strong>由aapt工具根据App中的资源文件自动生成,可以理解为资源字典</li>
+<li><strong>AndroidManifest.xml：</strong>app包名 + 组件声明 + 程序兼容的最低版本 + 所需权限等程序的配置文件</li>
+</ol>
+</blockquote>
+<hr>
+<p>后续内容对于初学者的你可能有点难度，但后面回头，你会发现这些东西很有用~ 看不懂的话，可以先跳过</p>
+<h2 id="4-ADB命令行的一些指令"><a href="#4-ADB命令行的一些指令" class="headerlink" title="4.ADB命令行的一些指令"></a>4.ADB命令行的一些指令</h2><blockquote>
+<p>执行ADB指令之前我们还需要为我们的SDK配置一下环境变量 <strong>Step 1:</strong>新建一个ANDROID_HOME的环境变量，把sdk根目录地址贴上去： <img src="https://www.runoob.com/wp-content/uploads/2015/06/4497768.jpg" alt="此处输入图片的描述"> <strong>Step 2:</strong>更新Path环境变量，在Paht开头加上：<strong>%ANDROID_HOME%\tools;</strong> 即可 配置完了，接下来就来学习指令了： <img src="https://www.runoob.com/wp-content/uploads/2015/06/95349283.jpg" alt="常用ADB指令"></p>
+</blockquote>
+<hr>
+<h2 id="5-APP程序打包与安装的流程："><a href="#5-APP程序打包与安装的流程：" class="headerlink" title="5.APP程序打包与安装的流程："></a>5.APP程序打包与安装的流程：</h2><blockquote>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/06/5918079.jpg" alt="APP程序打包与安装的流程"></p>
+</blockquote>
+<hr>
+<h2 id="6-APP的安装过程："><a href="#6-APP的安装过程：" class="headerlink" title="6.APP的安装过程："></a>6.APP的安装过程：</h2><blockquote>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/06/30239720.jpg" alt="APP的安装过程"></p>
+</blockquote>
+<h2 id="7-本节小结"><a href="#7-本节小结" class="headerlink" title="7.本节小结"></a>7.本节小结</h2><blockquote>
+<p>本节我们对Android开发IDE的现状进行了分析，建议初学者硬件条件允许的话，使用Android Studio来进行Android APP的开发，讲述了JDK的安装与配置，以及熟悉IDE的流程，一些关键名称的解析，ADB命令行的常用指令，最后还有程序的打包安装和安装过程的解析！经过这章相信大家对Android开发有了个简单了解，了解开发一个程序的流程，以及对应的项目目录结构！相信大家会抱怨模拟器AVD跑得很慢，下节会给大家介绍一个比真机还快的Android模拟器——Genymotion的安装使用！</p>
+</blockquote>
+</article><!-- lincense--><div class="post-paginator"><a class="prevSlogan" href="/2019/10/31/%E6%96%B0%E6%89%8B%E7%8E%A9%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="新手玩云服务器"><span>< PreviousPost</span><br><span class="prevTitle">新手玩云服务器</span></a><a class="nextSlogan" href="/2019/10/20/JSP%E7%AE%80%E4%BB%8B/" title="JSP简介"><span>NextPost ></span><br><span class="nextTitle">JSP简介</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-开发环境搭建"><span class="toc-number">1.</span> <span class="toc-text">1.2 开发环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分类-Android-基础入门教程"><span class="toc-number">1.1.</span> <span class="toc-text">分类 Android 基础入门教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-JDK安装与配置"><span class="toc-number">2.</span> <span class="toc-text">1.JDK安装与配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-开发工具二选一"><span class="toc-number">3.</span> <span class="toc-text">2.开发工具二选一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-相关术语的解析"><span class="toc-number">4.</span> <span class="toc-text">3.相关术语的解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ADB命令行的一些指令"><span class="toc-number">5.</span> <span class="toc-text">4.ADB命令行的一些指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-APP程序打包与安装的流程："><span class="toc-number">6.</span> <span class="toc-text">5.APP程序打包与安装的流程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-APP的安装过程："><span class="toc-number">7.</span> <span class="toc-text">6.APP的安装过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-本节小结"><span class="toc-number">8.</span> <span class="toc-text">7.本节小结</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
